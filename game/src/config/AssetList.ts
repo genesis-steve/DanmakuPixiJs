@@ -5,6 +5,14 @@ function getAssetList (): Array<IAsset> {
 		{
 			assetKey: 'flight.png',
 			assetUrl: 'assets/flight.png'
+		},
+		{
+			assetKey: 'danmaku.png',
+			assetUrl: 'assets/danmaku.png'
+		},
+		{
+			assetKey: 'judgePoint.png',
+			assetUrl: 'assets/judgePoint.png'
 		}
 	];
 }
