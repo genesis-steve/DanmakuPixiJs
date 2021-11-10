@@ -1,13 +1,21 @@
+import { Inject } from 'typescript-ioc';
 import { MoveDirection } from 'core/src/config/GeneralInterface';
+import { Viewport } from 'core/src/core/Viewport';
 import { View } from 'core/src/ui/View';
 import { IPlayer, Player } from 'game/src/components/field/elements/Player';
 import { IFieldConfig } from 'game/src/components/field/FieldConfig';
 
 export class FieldView extends View {
 
+	@Inject
+	protected viewport: Viewport;
+
 	protected config: IFieldConfig;
 
-	protected player: Player;
+	protected _player: Player;
+	public get player (): Player {
+		return this._player;
+	}
 
 	protected init ( config?: IFieldConfig ): void {
 		super.init( config );
@@ -15,23 +23,32 @@ export class FieldView extends View {
 	}
 
 	protected addPlayer ( config: IPlayer ): void {
-		this.player = new Player( config );
-		this.addChild( this.player );
+		this._player = new Player( config );
+		this.addChild( this._player );
 	}
 
-	public moveFight ( direction: MoveDirection ): void {
+	public moveFlight ( direction: MoveDirection ): void {
+		const player: Player = this._player;
 		switch ( direction ) {
 			case MoveDirection.UP:
-				this.player.position.y -= this.player.speed;
+				if ( player.y - player.height * player.anchor.y - player.speed >= 0 ) {
+					player.position.y -= player.speed;
+				}
 				break;
 			case MoveDirection.DOWN:
-				this.player.position.y += this.player.speed;
+				if ( player.y + player.height * ( 1 - player.anchor.y ) + player.speed <= this.viewport.height ) {
+					player.position.y += player.speed;
+				}
 				break;
 			case MoveDirection.LEFT:
-				this.player.position.x -= this.player.speed;
+				if ( player.x - player.width * player.anchor.x - player.speed >= 0 ) {
+					player.position.x -= player.speed;
+				}
 				break;
 			case MoveDirection.RIGHT:
-				this.player.position.x += this.player.speed;
+				if ( player.x + player.width * ( 1 - player.anchor.x ) + player.speed <= this.viewport.width ) {
+					player.position.x += player.speed;
+				}
 				break;
 		}
 	}

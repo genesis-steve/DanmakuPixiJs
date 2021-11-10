@@ -20,16 +20,16 @@ export class FieldController extends Controller {
 			const code: string = data.buttons[ i ].code;
 			switch ( code ) {
 				case KeyboardButton.ARROW_UP:
-					this.view.moveFight( MoveDirection.UP );
+					this.view.moveFlight( MoveDirection.UP );
 					break;
 				case KeyboardButton.ARROW_DOWN:
-					this.view.moveFight( MoveDirection.DOWN );
+					this.view.moveFlight( MoveDirection.DOWN );
 					break;
 				case KeyboardButton.ARROW_LEFT:
-					this.view.moveFight( MoveDirection.LEFT );
+					this.view.moveFlight( MoveDirection.LEFT );
 					break;
 				case KeyboardButton.ARROW_RIGHT:
-					this.view.moveFight( MoveDirection.RIGHT );
+					this.view.moveFlight( MoveDirection.RIGHT );
 					break;
 			}
 		}
